@@ -65,11 +65,11 @@ export default function Navbar() {
         {/* Services mega */}
         <div className={s.megaTrigger}>
           <button
-            className={s.navLink}
+            className={`${s.navLink} ${openMenu === "services" ? s.navLinkActive : ""}`}
             onClick={() => toggle("services")}
             style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", color: "inherit", padding: 0 }}
           >
-            Services <span className={s.megaArrow} style={{ transform: openMenu === "services" ? "rotate(180deg)" : "none", transition: "transform 200ms" }}>&#9662;</span>
+            Services <svg className={s.megaArrow} style={{ transform: openMenu === "services" ? "rotate(180deg)" : "none", transition: "transform 200ms" }} width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
           <div className={`${s.megaPanel} ${openMenu === "services" ? s.megaPanelOpen : ""}`}>
             <div className={s.megaPanelInner}>
@@ -108,11 +108,11 @@ export default function Navbar() {
         {/* Areas mega */}
         <div className={s.megaTrigger}>
           <button
-            className={s.navLink}
+            className={`${s.navLink} ${openMenu === "areas" ? s.navLinkActive : ""}`}
             onClick={() => toggle("areas")}
             style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", color: "inherit", padding: 0 }}
           >
-            Areas <span className={s.megaArrow} style={{ transform: openMenu === "areas" ? "rotate(180deg)" : "none", transition: "transform 200ms" }}>&#9662;</span>
+            Areas <svg className={s.megaArrow} style={{ transform: openMenu === "areas" ? "rotate(180deg)" : "none", transition: "transform 200ms" }} width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
           <div className={`${s.megaPanel} ${openMenu === "areas" ? s.megaPanelOpen : ""}`}>
             <div className={s.megaPanelInner} style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
@@ -133,11 +133,11 @@ export default function Navbar() {
         {/* Company dropdown */}
         <div className={s.megaTrigger}>
           <button
-            className={s.navLink}
+            className={`${s.navLink} ${openMenu === "company" ? s.navLinkActive : ""}`}
             onClick={() => toggle("company")}
             style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", color: "inherit", padding: 0 }}
           >
-            Company <span className={s.megaArrow} style={{ transform: openMenu === "company" ? "rotate(180deg)" : "none", transition: "transform 200ms" }}>&#9662;</span>
+            Company <svg className={s.megaArrow} style={{ transform: openMenu === "company" ? "rotate(180deg)" : "none", transition: "transform 200ms" }} width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
           <div className={`${s.companyDropdown} ${openMenu === "company" ? s.companyDropdownOpen : ""}`}>
             {companyItems.map((item) => (
