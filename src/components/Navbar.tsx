@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { contact, residentialServices, commercialServices, specialtyServices, areasByRegion } from "@/lib/data";
@@ -15,10 +15,10 @@ const companyItems = [
   { label: "Contact", href: "/contact" },
 ];
 
-function ServiceMegaItem({ icon, title, href }: { icon: string; title: string; href: string }) {
+function ServiceMegaItem({ icon, title, href, onClick }: { icon: string; title: string; href: string; onClick: () => void }) {
   const Icon = iconMap[icon];
   return (
-    <Link href={href} className={s.megaServiceItem}>
+    <Link href={href} className={s.megaServiceItem} onClick={onClick}>
       <span className={s.megaServiceIcon}>{Icon ? <Icon size={20} /> : null}</span>
       <span className={s.megaServiceTitle}>{title}</span>
     </Link>
@@ -28,9 +28,29 @@ function ServiceMegaItem({ icon, title, href }: { icon: string; title: string; h
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const navRef = useRef<HTMLElement>(null);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    if (!openMenu) return;
+    function handleClick(e: MouseEvent) {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpenMenu(null);
+      }
+    }
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [openMenu]);
+
+  const toggle = (menu: string) => {
+    setOpenMenu(openMenu === menu ? null : menu);
+  };
+
+  const closeMenu = () => setOpenMenu(null);
 
   return (
-    <nav className={s.nav}>
+    <nav className={s.nav} ref={navRef}>
       <Link href="/" className={s.navBrand} style={{ textDecoration: "none" }}>
         <Image src="/images/logo-icon.png" alt="City Power Electrical Services" width={90} height={90} style={{ borderRadius: 10 }} />
         <span className={s.navBrandText}>
@@ -44,27 +64,31 @@ export default function Navbar() {
 
         {/* Services mega */}
         <div className={s.megaTrigger}>
-          <Link href="/services" className={s.navLink}>
-            Services <span className={s.megaArrow}>&#9662;</span>
-          </Link>
-          <div className={s.megaPanel}>
+          <button
+            className={s.navLink}
+            onClick={() => toggle("services")}
+            style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", color: "inherit", padding: 0 }}
+          >
+            Services <span className={s.megaArrow} style={{ transform: openMenu === "services" ? "rotate(180deg)" : "none", transition: "transform 200ms" }}>&#9662;</span>
+          </button>
+          <div className={`${s.megaPanel} ${openMenu === "services" ? s.megaPanelOpen : ""}`}>
             <div className={s.megaPanelInner}>
               <div className={s.megaCol}>
                 <div className={s.megaColTitle}>Residential</div>
                 {residentialServices.map((svc) => (
-                  <ServiceMegaItem key={svc.title} icon={svc.icon} title={svc.title} href="/services/residential" />
+                  <ServiceMegaItem key={svc.title} icon={svc.icon} title={svc.title} href="/services/residential" onClick={closeMenu} />
                 ))}
               </div>
               <div className={s.megaCol}>
                 <div className={s.megaColTitle}>Commercial</div>
                 {commercialServices.map((svc) => (
-                  <ServiceMegaItem key={svc.title} icon={svc.icon} title={svc.title} href="/services/commercial" />
+                  <ServiceMegaItem key={svc.title} icon={svc.icon} title={svc.title} href="/services/commercial" onClick={closeMenu} />
                 ))}
               </div>
               <div className={s.megaCol}>
                 <div className={s.megaColTitle}>Specialty</div>
                 {specialtyServices.map((svc) => (
-                  <ServiceMegaItem key={svc.title} icon={svc.icon} title={svc.title} href="/services/specialty" />
+                  <ServiceMegaItem key={svc.title} icon={svc.icon} title={svc.title} href="/services/specialty" onClick={closeMenu} />
                 ))}
               </div>
               <div className={s.megaEmergency}>
@@ -83,16 +107,20 @@ export default function Navbar() {
 
         {/* Areas mega */}
         <div className={s.megaTrigger}>
-          <Link href="/areas" className={s.navLink}>
-            Areas <span className={s.megaArrow}>&#9662;</span>
-          </Link>
-          <div className={s.megaPanel}>
+          <button
+            className={s.navLink}
+            onClick={() => toggle("areas")}
+            style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", color: "inherit", padding: 0 }}
+          >
+            Areas <span className={s.megaArrow} style={{ transform: openMenu === "areas" ? "rotate(180deg)" : "none", transition: "transform 200ms" }}>&#9662;</span>
+          </button>
+          <div className={`${s.megaPanel} ${openMenu === "areas" ? s.megaPanelOpen : ""}`}>
             <div className={s.megaPanelInner} style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
               {Object.entries(areasByRegion).map(([region, cities]) => (
                 <div key={region} className={s.megaCol}>
                   <div className={s.megaColTitle}>{region}</div>
                   {cities.map((city) => (
-                    <Link key={city} href="/areas" className={s.megaAreaCity}>
+                    <Link key={city} href="/areas" className={s.megaAreaCity} onClick={closeMenu}>
                       {city}
                     </Link>
                   ))}
@@ -104,12 +132,16 @@ export default function Navbar() {
 
         {/* Company dropdown */}
         <div className={s.megaTrigger}>
-          <span className={s.navLink} style={{ cursor: "pointer" }}>
-            Company <span className={s.megaArrow}>&#9662;</span>
-          </span>
-          <div className={s.companyDropdown}>
+          <button
+            className={s.navLink}
+            onClick={() => toggle("company")}
+            style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit", fontWeight: "inherit", color: "inherit", padding: 0 }}
+          >
+            Company <span className={s.megaArrow} style={{ transform: openMenu === "company" ? "rotate(180deg)" : "none", transition: "transform 200ms" }}>&#9662;</span>
+          </button>
+          <div className={`${s.companyDropdown} ${openMenu === "company" ? s.companyDropdownOpen : ""}`}>
             {companyItems.map((item) => (
-              <Link key={item.label} href={item.href} className={s.companyDropdownItem}>
+              <Link key={item.label} href={item.href} className={s.companyDropdownItem} onClick={closeMenu}>
                 {item.label}
               </Link>
             ))}

@@ -64,7 +64,7 @@
   align-items: center;
   align-self: stretch;
 }
-.megaArrow { font-size: 10px; margin-left: 2px; }
+.megaArrow { font-size: 10px; margin-left: 2px; display: inline-block; }
 .megaPanel {
   position: fixed;
   top: 80px;
@@ -79,20 +79,13 @@
   opacity: 0;
   transform: translateY(-8px);
   transition: opacity 200ms, transform 200ms, visibility 200ms;
+  pointer-events: none;
 }
-.megaPanel::before {
-  content: "";
-  position: absolute;
-  top: -24px;
-  left: 0;
-  right: 0;
-  height: 24px;
-}
-.megaTrigger:hover .megaPanel,
-.megaTrigger:focus-within .megaPanel {
+.megaPanelOpen {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
 }
 .megaPanelInner {
   max-width: 1280px;
@@ -182,12 +175,13 @@
   visibility: hidden;
   opacity: 0;
   transition: opacity 200ms, transform 200ms, visibility 200ms;
+  pointer-events: none;
 }
-.megaTrigger:hover .companyDropdown,
-.megaTrigger:focus-within .companyDropdown {
+.companyDropdownOpen {
   visibility: visible;
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
 }
 .companyDropdownItem {
   display: block;
