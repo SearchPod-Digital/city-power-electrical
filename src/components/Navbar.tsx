@@ -55,7 +55,7 @@ export default function Navbar() {
         <Image src="/images/logo-icon.png" alt="City Power Electrical Services" width={90} height={90} style={{ borderRadius: 10 }} />
         <span className={s.navBrandText}>
           <span style={{ display: "block", fontSize: 20, fontWeight: 800 }}>City Power</span>
-          <span style={{ display: "block", fontSize: 13, fontWeight: 500, color: "var(--c4, #475569)" }}>Electrical Services</span>
+          <span style={{ display: "block", fontSize: 20, fontWeight: 500, color: "var(--c4, #475569)" }}>Electrical Services</span>
         </span>
       </Link>
 

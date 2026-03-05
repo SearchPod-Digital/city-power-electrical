@@ -33,7 +33,7 @@ export default function Footer({ styles: s, basePath, designLabel }: FooterProps
               <Image src="/images/logo-icon.png" alt="City Power Electrical Services" width={80} height={80} style={{ borderRadius: 10 }} />
               <span className={s.footerBrandText}>
                 <span style={{ display: "block", fontSize: 18, fontWeight: 800 }}>City Power</span>
-                <span style={{ display: "block", fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.4)" }}>Electrical Services</span>
+                <span style={{ display: "block", fontSize: 18, fontWeight: 500, color: "rgba(255,255,255,0.4)" }}>Electrical Services</span>
               </span>
             </Link>
             <p className={s.footerText}>
