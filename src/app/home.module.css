@@ -59,6 +59,16 @@
 
 /* ── Mega Menu ── */
 .megaTrigger { position: relative; }
+.megaTrigger::after {
+  content: "";
+  position: absolute;
+  left: -16px;
+  right: -16px;
+  top: 100%;
+  height: 24px;
+  display: none;
+}
+.megaTrigger:hover::after { display: block; }
 .megaArrow { font-size: 10px; margin-left: 2px; }
 .megaPanel {
   position: fixed;
